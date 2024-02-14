@@ -45,29 +45,6 @@ async function main() {
 
 main();
 
-async function getProjectName() {
-  const answers = await inquirer.prompt([
-    {
-      type: 'list',
-      name: 'destination',
-      message: 'Select installation destination:',
-      choices: ['Current Repository', '~/typescript_test']
-    }
-  ]);
-
-  let projectName = '';
-  if (answers.destination === 'Current Repository') {
-    projectName = generateProjectName();
-  } else { // '~/typescript_test'
-    // @ts-ignore
-    const baseFolder = join(process.env.HOME, 'typescript_test');
-    if (!existsSync(baseFolder)) {
-      mkdirSync(baseFolder, { recursive: true });
-    }
-    projectName = join(baseFolder, generateProjectName());
-  }
-  return projectName;
-}
 
 
 // Function to check Node version compatibility
@@ -82,19 +59,6 @@ function checkNodeVersion() {
   }
 }
 
-// Generate a default project name with dynamic date and increment
-function generateProjectName() {
-  const baseName = `test`
-  let counter = 1;
-  let projectName = `${baseName}_${counter}`;
-
-  while (existsSync(projectName)) {
-    counter++;
-    projectName = `${baseName}_${counter}`;
-  }
-
-  return projectName;
-}
 
 // Check if VS Code command line tool is installed
 function checkVSCodeCLI() {
@@ -106,3 +70,41 @@ function checkVSCodeCLI() {
   }
 }
 
+async function getProjectName() {
+  const answers = await inquirer.prompt([
+    {
+      type: 'list',
+      name: 'destination',
+      message: 'Select installation destination:',
+      choices: ['Current Repository', '~/typescript_test']
+    }
+  ]);
+
+  let projectName = '';
+  let baseFolder = ''; // Define baseFolder here for scope access
+  if (answers.destination === 'Current Repository') {
+    baseFolder = '.';
+    projectName = generateProjectName(baseFolder);
+  } else { // '~/typescript_test'
+    baseFolder = join(process.env.HOME, 'typescript_test');
+    if (!existsSync(baseFolder)) {
+      mkdirSync(baseFolder, { recursive: true });
+    }
+    projectName = generateProjectName(baseFolder);
+  }
+  return projectName;
+}
+
+// Adjust generateProjectName to accept baseFolder
+function generateProjectName(baseFolder) {
+  const baseName = `test`;
+  let counter = 1;
+  let fullPath = join(baseFolder, `${baseName}_${counter}`);
+
+  while (existsSync(fullPath)) {
+    counter += 1;
+    fullPath = join(baseFolder, `${baseName}_${counter}`);
+  }
+
+  return fullPath; // Return the full path to ensure uniqueness across different directories
+}
