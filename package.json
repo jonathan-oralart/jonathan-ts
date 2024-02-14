@@ -1,0 +1,14 @@
+{
+    "name": "jonathan-ts",
+    "version": "1.0.1",
+    "description": "A script to set up a typescript project in vscode that works with debugging",
+    "main": "index.js",
+    "scripts": {
+        "test": "node index.js"
+    },
+    "bin": {
+        "jonathan-ts": "./index.js"
+    },
+    "author": "Jonathan de Wet",
+    "license": "ISC"
+}
