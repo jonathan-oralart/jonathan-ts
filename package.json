@@ -1,6 +1,7 @@
 {
     "name": "jonathan-ts",
-    "version": "1.0.1",
+    "version": "1.0.2",
+    "type": "module",
     "description": "A script to set up a typescript project in vscode that works with debugging",
     "main": "index.js",
     "scripts": {
@@ -10,5 +11,10 @@
         "jonathan-ts": "./index.js"
     },
     "author": "Jonathan de Wet",
-    "license": "ISC"
+    "license": "ISC",
+    "dependencies": {
+        "inquirer": "^9.2.14",
+        "install": "^0.13.0",
+        "npm": "^10.4.0"
+    }
 }
