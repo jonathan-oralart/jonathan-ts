@@ -1,6 +1,6 @@
 {
     "name": "jonathan-ts",
-    "version": "1.0.4",
+    "version": "1.0.6",
     "type": "module",
     "description": "A script to set up a typescript project in vscode that works with debugging",
     "main": "index.js",

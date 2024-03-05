@@ -22,6 +22,9 @@ async function main() {
 
     console.log("Initializing a new git repository...");
     execSync('git init', { cwd: projectName });
+    
+    execSync('git add .', { cwd: projectName });
+    execSync('git commit -m "Initial commit"', { cwd: projectName });
 
     console.log("Checking pnpm...");
     try {
@@ -52,7 +55,7 @@ function checkNodeVersion() {
   const version = process.versions.node;
   const majorVersion = parseInt(version.split('.')[0], 10);
 
-  if (majorVersion < 21) {
+  if (majorVersion < 20) {
     console.log("Your Node version is less than the required version 21.");
     console.log("Please update your Node.js to version 21 or higher.");
     process.exit(1);
@@ -86,6 +89,7 @@ async function getProjectName() {
     baseFolder = '.';
     projectName = generateProjectName(baseFolder);
   } else { // '~/typescript_test'
+    // @ts-ignore
     baseFolder = join(process.env.HOME, 'typescript_test');
     if (!existsSync(baseFolder)) {
       mkdirSync(baseFolder, { recursive: true });
